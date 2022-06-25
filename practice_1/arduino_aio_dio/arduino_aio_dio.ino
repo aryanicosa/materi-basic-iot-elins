@@ -1,21 +1,23 @@
-//definisi variable global
-const int buttonPin = 1;
-const int digitalOutLedPin = 2;
-const int analogOutLedPin = 3;
-const int analogInPin = A0; 
+// definisi variable global
+const int buttonPin = 2;
+const int digitalOutLedPin = 3;
+const int analogOutLedPin = 11;
+const int analogInPin = A0;
 
 int sensorValue = 0;
 int analogOutValue = 0;
 int buttonState = 0;
 
-void setup() {
+void setup()
+{
     Serial.begin(9600);
     pinMode(buttonPin, INPUT);
     pinMode(digitalOutLedPin, OUTPUT);
     pinMode(analogOutLedPin, OUTPUT);
 }
 
-void loop() {
+void loop()
+{
     // read the analog in value:
     sensorValue = analogRead(analogInPin);
     // map it to the range of the analog out:
@@ -44,5 +46,4 @@ void loop() {
         // turn LED off:
         digitalWrite(digitalOutLedPin, LOW);
     }
-
 }
