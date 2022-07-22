@@ -1,6 +1,7 @@
-#define BLYNK_TEMPLATE_ID           "TMPLKdXKI550"
-#define BLYNK_DEVICE_NAME           "Quickstart Template"
-#define BLYNK_AUTH_TOKEN            "Ux45VbvZF3Djy-WDPwvZKYU_HRyxhwcU"
+//http://arduino.esp8266.com/stable/package_esp8266com_index.json
+#define BLYNK_TEMPLATE_ID "TMPLKdXKI550"
+#define BLYNK_DEVICE_NAME "Quickstart Template"
+#define BLYNK_AUTH_TOKEN "Ux45VbvZF3Djy-WDPwvZKYU_HRyxhwcU"
 
 // Comment this out to disable prints and save space
 #define BLYNK_PRINT Serial

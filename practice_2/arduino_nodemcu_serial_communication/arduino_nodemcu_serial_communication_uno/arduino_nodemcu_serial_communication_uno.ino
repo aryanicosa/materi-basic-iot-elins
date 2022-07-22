@@ -10,35 +10,41 @@ char charToNodeMcu;
 
 void setup()
 {
-    // Open serial communications and wait for port to open:
-    delay(10);
-    Serial.begin(115200);
-    // set the data rate for the SoftwareSerial port
-    mySerial.begin(115200);
+  Serial.begin(115200);
+  mySerial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop()
-{ // run over and over
-    while(Serial.available() > 0)
-    {
-        delay(10);
-        charToNodeMcu = Serial.read();
-        dataToNodeMcu += charToNodeMcu;
-    }
-    mySerial.print(dataToNodeMcu);
-    dataToNodeMcu = "";
+{
+  while (Serial.available() > 0)
+  {
+    delay(10);
+    charToNodeMcu = Serial.read();
+    dataToNodeMcu += charToNodeMcu;
+  }
+  mySerial.print(dataToNodeMcu);
+  dataToNodeMcu = "";
 
-    while (mySerial.available() > 0) {
-        delay(10);
-        charFromNodeMcu = mySerial.read();
-        dataFromNodeMcu += charFromNodeMcu;
-    }
+  while (mySerial.available() > 0)
+  {
+    delay(10);
+    charFromNodeMcu = mySerial.read();
+    dataFromNodeMcu += charFromNodeMcu;
+  }
+  dataFromNodeMcu.trim();
 
-    dataFromNodeMcu.trim();
-    if (dataFromNodeMcu.length() > 0) 
-    {
-        Serial.println(dataFromNodeMcu);
-    }
-
-    dataFromNodeMcu = "";
+  if (dataFromNodeMcu == "1")
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else if (dataFromNodeMcu == "0")
+  {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+  else
+  {
+    Serial.print(dataFromNodeMcu);
+  }
+  dataFromNodeMcu = "";
 }

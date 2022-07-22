@@ -1,16 +1,6 @@
-#include "SoftwareSerial.h"
+#include <SoftwareSerial.h>
 
-#ifndef D5
-#if defined(ESP8266)
-#define D5 (14) // RX
-#define D6 (12) // TX
-#elif defined(ESP32)
-#define D5 (18)
-#define D6 (19)
-#endif
-#endif
-
-SoftwareSerial mySerial;
+SoftwareSerial mySerial(D2, D1); // Rx, Tx
 
 String dataFromArduino;
 char charFromArduino;
@@ -18,15 +8,15 @@ char charFromArduino;
 String dataToArduino;
 char charToArduino;
 
-void setup() {
-  // put your setup code here, to run once:
-  delay(10);
+void setup()
+{
   Serial.begin(115200);
-  mySerial.begin(115200, SWSERIAL_8N1, D5, D6, false, 256);
+  mySerial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop()
+{
   while (Serial.available() > 0)
   {
     delay(10);
@@ -36,17 +26,25 @@ void loop() {
   mySerial.print(dataToArduino);
   dataToArduino = "";
 
-  while (mySerial.available() > 0) {
+  while (mySerial.available() > 0)
+  {
+    delay(10);
     charFromArduino = mySerial.read();
     dataFromArduino += charFromArduino;
-    yield();
   }
-  
   dataFromArduino.trim();
-  if (dataFromArduino.length() > 0)
-  {
-    Serial.println(dataFromArduino);
-  }
 
+  if (dataFromArduino != "" && dataFromArduino == "1")
+  {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+  else if (dataFromArduino == "0")
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else
+  {
+    Serial.print(dataFromArduino);
+  }
   dataFromArduino = "";
 }
